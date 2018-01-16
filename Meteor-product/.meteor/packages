@@ -26,3 +26,4 @@ easy:search
 easysearch:elasticsearch
 shell-server
 dynamic-import
+http

@@ -2,14 +2,14 @@ import React, { Component } from 'react';
 import { withTracker } from 'meteor/react-meteor-data';
  
 import { Products } from '../api/products.js';
+import { bodyMaker, elasticSearch, getProducts } from '../api/elasticSearch.js'
 
 import Product from './Product.js';
 import Search from './Search.js'
 import EditPop from './PopUps.js'
 import CreatePop from './PopUps.js'
 
-var searchQuery = new ReactiveVar()
-var searching   = new ReactiveVar( false )
+var listData = new ReactiveVar()
 
 class App extends Component {
 
@@ -19,6 +19,9 @@ class App extends Component {
     this.state = {
       product: null
     }
+
+    // init data
+    this.pullData()
   }
 
   renderProducts() {
@@ -35,6 +38,7 @@ class App extends Component {
       if (error) {
         alert(error)
       } else {
+        this.pullData()        
         this.refs.createPop.hide()
       }
     })
@@ -46,24 +50,21 @@ class App extends Component {
     }, (error, result) => {
       if (error) {
         alert(error)
-        // TODO:更友好的错误提示方式
-        // console.log(error.invalidKeys)
       } else {
+        this.pullData()        
         this.refs.editPop.hide()
       }
     });
   }
 
   onSearch(keywords) {
-    let searchObj = {}
+    let serachBody = bodyMaker.allData()
 
     if (keywords) {
-      searchObj = {
-        "$or": [{"name": eval(`/${keywords}/`) }, {"desc": eval(`/${keywords}/`)}]
-      }
+      serachBody = bodyMaker.nameDesc(keywords)
     }
 
-    searchQuery.set(searchObj)
+    elasticSearch(serachBody).then(data => listData.set(data))
   }
 
   showCreatePop() {
@@ -76,6 +77,10 @@ class App extends Component {
     })
 
     this.refs.editPop.show()
+  }
+
+  pullData() {
+    getProducts().then(data => listData.set(data))
   }
  
   render() {
@@ -117,7 +122,8 @@ class App extends Component {
 }
 
 export default withTracker(() => {
+
   return {
-    products: Products.find(searchQuery.get() || {}, { sort: { createdAt: -1 } }).fetch(),
+    products: listData.get() || []
   };
 })(App);

@@ -1,17 +1,18 @@
 import { Mongo } from 'meteor/mongo';
-// import { Index } from 'meteor/easy:search'
-// import { ElasticSearchEngine } from 'meteor/easysearch:elasticsearch'
+import { Index } from 'meteor/easy:search'
+import { ElasticSearchEngine } from 'meteor/easysearch:elasticsearch'
 
 var Products = new Mongo.Collection('products')
 var Schemas = {}
 
-// var ProductsIndex = new Index({
-//   collection: Products,
-//   fields: ['name', 'desc'],
-//   engine: new ElasticSearchEngine({
-//     body: () => {} // modify the body that's sent when searching
-//   }),
-// })
+var ProductsIndex = new Index({
+  collection: Products,
+  fields: ['name', 'desc'],
+  engine: new ElasticSearchEngine({
+    body: () => {}
+  })
+})
+
 Schemas.Product = new SimpleSchema({
   name: {
     type: String,
@@ -57,4 +58,4 @@ Schemas.Product = new SimpleSchema({
 
 Products.attachSchema(Schemas.Product)
 
-export { Products }
+export { Products, ProductsIndex }
