@@ -41,7 +41,8 @@ export default class PopUps extends Component {
       createdAt: new Date(),
       updatedAt: new Date()
     }
-    this.props.onSubmit(data)
+
+    this._submit(data)
   }
 
   handleChange(event) {
@@ -64,6 +65,12 @@ export default class PopUps extends Component {
       desc: '',
       price: 0
     })
+  }
+
+  _submit(data) {
+    if (this.props.onSubmit) {
+      this.props.onSubmit(data)
+    }
   }
 
   render() {

@@ -1,21 +1,43 @@
-import React, { Component } from 'react';
-
-const enterKey = 13
+import React, { Component } from 'react'
 
 export default class Search extends Component {
-  onKeyUp(event) {
-    if (event.keyCode === enterKey) {
-      let content = this.refs.input.value.trim()
-      
-      this.submit(content)
+
+  constructor(props) {
+    super(props)
+
+    this.state = {
+      autoSearch: this.props.autoSearch,
+      timer: null,
+      interval: this.props.interval || 400
     }
   }
 
-  submit(content) {
-    if (this.props.onSubmit) {
-      this.props.onSubmit(content)
+  onKeyPress(event) {
+    if (event.key == 'Enter') {
+      event.preventDefault()
+
+      let keywords = this.refs.input.value.trim()
+
+      this._submit(keywords)
     }
-    console.log(content)
+  }
+
+  onInput(event) {
+    if (this.state.autoSearch) {
+      let keywords = this.refs.input.value.trim()
+
+      if (this.state.timer) clearTimeout(this.state.timer)
+
+      this.state.timer = setTimeout(() => {
+        this._submit(keywords)
+      }, this.state.interval)
+    }
+  }
+
+  _submit(keywords) {
+    if (this.props.onSubmit) {
+      this.props.onSubmit(keywords)
+    }
   }
 
   render() {
@@ -26,7 +48,8 @@ export default class Search extends Component {
             placeholder="Search..." 
             aria-label="Search"
             ref="input"
-            onKeyUp={this.onKeyUp(event)} />
+            onInput={this.onInput.bind(this)}
+            onKeyPress={this.onKeyPress.bind(this)} />
       </form>
     );
   }

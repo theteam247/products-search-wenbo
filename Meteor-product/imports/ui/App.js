@@ -59,6 +59,18 @@ class App extends Component {
     });
   }
 
+  onSearch(keywords) {
+    let searchObj = {}
+
+    if (keywords) {
+      searchObj = {
+        "$or": [{"name": eval(`/${keywords}/`) }, {"desc": eval(`/${keywords}/`)}]
+      }
+    }
+
+    searchQuery.set(searchObj)
+  }
+
   showCreatePop() {
     this.refs.createPop.show()
   }
@@ -76,7 +88,7 @@ class App extends Component {
       <div>
         <nav className="navbar navbar-light bg-light">
           <h1 className="navbar-brand">Product Manage</h1>
-          <Search></Search>
+          <Search onSubmit={this.onSearch.bind(this)} autoSearch={true}></Search>
         </nav>
 
         <main>
