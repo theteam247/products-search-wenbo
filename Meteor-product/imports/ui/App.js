@@ -29,7 +29,8 @@ class App extends Component {
       <Product key={product._id} 
           product={product}
           index={index}
-          onShow={data => this.showEditPop(data)}/>
+          handleDelete={this.onDelete.bind(this)}
+          handleEdit={data => this.showEditPop(data)}/>
     ));
   }
 
@@ -57,6 +58,13 @@ class App extends Component {
     });
   }
 
+  onDelete(product) {
+    if (confirm(`Delete ${product.name}?`)) {
+      Products.remove(product._id)
+      this.pullData()
+    }
+  }
+
   onSearch(keywords) {
     let serachBody = bodyMaker.allData()
 
@@ -68,10 +76,19 @@ class App extends Component {
   }
 
   showCreatePop() {
+    this.setState(() => {
+      return {product: {
+        name: '',
+        desc: '',
+        price: 0
+      }}
+    })
+
     this.refs.createPop.show()
   }
 
   showEditPop(product) {
+    console.log(product)
     this.setState((prevState) => {
       return {product: product}
     })

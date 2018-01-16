@@ -58,12 +58,6 @@ export default class PopUps extends Component {
     this.setState((prevState) => {
       return {show: false}
     })
-
-    this.setState({
-      name: '',
-      desc: '',
-      price: 0
-    })
   }
 
   _submit(data) {
