@@ -6,6 +6,7 @@ export default class PopUps extends Component {
     super(props)
 
     this.state = {
+      onSubmit: this.props.onSubmit,
       show: false,
       product: this.props.product,
       name: '',
@@ -37,9 +38,7 @@ export default class PopUps extends Component {
     let data = {
       name: this.state.name,
       desc: this.state.desc,
-      price: this.state.price,
-      createdAt: new Date(),
-      updatedAt: new Date()
+      price: this.state.price
     }
 
     this._submit(data)
@@ -68,8 +67,8 @@ export default class PopUps extends Component {
   }
 
   _submit(data) {
-    if (this.props.onSubmit) {
-      this.props.onSubmit(data)
+    if (this.state.onSubmit) {
+      this.state.onSubmit(data)
     }
   }
 

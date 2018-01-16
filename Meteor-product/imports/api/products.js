@@ -12,7 +12,6 @@ var Schemas = {}
 //     body: () => {} // modify the body that's sent when searching
 //   }),
 // })
-
 Schemas.Product = new SimpleSchema({
   name: {
     type: String,
@@ -33,10 +32,26 @@ Schemas.Product = new SimpleSchema({
     optional: true
   },
   createdAt: {
-    type: Date
+    type: Date,
+    autoValue: function() {
+      if (this.isInsert) {
+        return new Date();
+      } else if (this.isUpsert) {
+        return {$setOnInsert: new Date()};
+      } else {
+        this.unset();
+      }
+    }
   },
   updatedAt: {
-    type: Date
+    type: Date,
+    autoValue: function() {
+      if (this.isUpdate) {
+        return new Date();
+      }
+    },
+    denyInsert: true,
+    optional: true
   }
 })
 

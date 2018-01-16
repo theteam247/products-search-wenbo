@@ -30,8 +30,8 @@ class App extends Component {
     ));
   }
 
-  onCreate(data) {
-    Products.insert(data, (error, result) => {
+  onCreate(product) {
+    Products.insert(product, (error, result) => {
       if (error) {
         alert(error)
       } else {
@@ -42,12 +42,7 @@ class App extends Component {
 
   onEdit(product) {
     Products.update(this.state.product._id, {
-      $set: {
-        name: product.name,
-        desc: product.desc,
-        price: product.price,
-        updatedAt: new Date()
-      }
+      $set: product
     }, (error, result) => {
       if (error) {
         alert(error)
@@ -114,6 +109,7 @@ class App extends Component {
         <EditPop ref="editPop" 
             onSubmit={data => this.onEdit(data)}
             product={this.state.product}></EditPop>
+
         <CreatePop ref="createPop" onSubmit={data => this.onCreate(data)}></CreatePop>
       </div>
     );
