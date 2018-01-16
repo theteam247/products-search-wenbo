@@ -1,0 +1,76 @@
+/* CSS declarations go here */
+.navbar {
+  display: flex;
+  align-items: center;
+  padding-right: 20px;
+  background: #f8f9fa;
+}
+.navbar h1 {
+  flex: 1;
+  margin-top: 10px;
+}
+
+main {
+  padding: 0 20px;
+}
+main .btn-add {
+  margin-bottom: 10px;
+}
+
+main table th {
+  text-align: center;
+}
+main table .name {
+  max-width: 200px;
+}
+main table .desc {
+  max-width: 300px;
+}
+main table .action {
+  text-align: center;
+}
+main table .action button:first-child {
+  margin-right: 10px;
+}
+
+
+.pop-ups .mask {
+  position: absolute;
+  top: 0;
+  left: 0;
+  bottom: 0;
+  right: 0;
+  background: rgba(0, 0, 0, 0.3);
+}
+.pop-ups .content {
+  position: fixed;
+  top: 40%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  padding: 20px;
+  border: 1px solid #efefef;
+  border-radius: 4px;
+  box-shadow: 10px 10px 12px -1px rgba(0,0,0,0.13);
+  min-width: 350px;
+  background: #fff;
+}
+.pop-ups label {
+  display: block;
+  margin-top: 1em;
+}
+.pop-ups label:first-child {
+  margin-top: 0;
+}
+.pop-ups label span {
+  display: inline-block;
+  min-width: 80px;
+}
+.pop-ups label textarea {
+  vertical-align: top;
+}
+.pop-ups .action {
+  text-align: center;
+}
+.pop-ups .action button {
+  margin: 2em 1em 0 1em;
+}
