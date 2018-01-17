@@ -1,6 +1,6 @@
 # Product Manage(Apollo + React)
 
-## 说明
+## Intro
 
 本例子，按照 https://www.howtographql.com/react-apollo 一步步实现。
 
