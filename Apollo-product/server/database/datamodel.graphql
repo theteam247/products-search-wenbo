@@ -1,0 +1,14 @@
+type Link {
+  id: ID! @unique
+  description: String!
+  url: String!
+}
+
+type Product @model {
+  id: ID! @unique
+  createdAt: DateTime!
+  updatedAt: DateTime!
+  name: String!
+  price: Float
+  description: String
+}
